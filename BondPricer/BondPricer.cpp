@@ -2,6 +2,7 @@
 using namespace std;
 
 
+
 //for exponential calculation
 
 double expon (double t, double ytm) {
@@ -42,33 +43,76 @@ double c_p(double c_r, double f_v) {
 
 //for approximating Yield to maturity (if necessary)
 
+double approx_ytm (double (*c_ptr)(double,double), double f_v, double present_value, double c_r, double t) {
+
+	return ((c_ptr(c_r,f_v) + (f_v - present_value) / t) / (f_v + present_value)) / 2.0;
+
+}
 
 
 int main() {
 
-	double ytm; //Doubles used for precision and to avoid truncation
+	int check;
+	double ytm;                                                     //Doubles used for precision and to avoid truncation
 	double f_v;
 	double c_r;
 	double t;
-	double Present_Value;
+	double present_value = 0.0;
+	double approximated_ytm = 0.0;
+	double (*c_ptr)(double, double);                                //Function pointer for coupon payment function to store its address
+	c_ptr = c_p;                                                //Set function pointer equal to function so it can be passed as a paremeter outside of main
+
+
+
 
 	cout << "What is the face value of the bond?" << endl;
 	cin >> f_v;
 	cout << "What is annual coupon rate in percent form?" << endl;
 	cin >> c_r;
 	cout << "What is the number of years to maturity?" << endl;
-	cin >> t;
-	cout << "What is the Yield to Maturity in percent form?" << endl;
-	cin >> ytm;
+	cin >> t;  
 
-   /*Present Value of bond*/
-	Present_Value = annuity_pv(c_p(c_r, f_v), ytm, t) + faceval_pv(f_v, ytm, t);
 
-	cout << "The present value of your bond is: " << Present_Value << endl;
-	cout << "The present value of your coupon payments is: " << annuity_pv(c_p(c_r, f_v), ytm, t) << endl;
-	cout << "Your coupon payment is: " << c_p(c_r, f_v) << endl;
-	cout << "Your result from exponential equation is: " << expon(t, ytm);
+	cout << "Do you have the yield to maturity? Type 1 or 2 to continue" << endl;
+	cout << "1. Yes" << endl;
+	cout << "2. No" << endl;
+	cin >> check;
 
+
+	switch (check) {
+
+	case 1:                                                                                                         /*If "Yes" is chosen*/
+	{
+		cout << "What is the Yield to Maturity in percent form?" << endl;
+		cin >> ytm;
+
+		present_value = annuity_pv(c_p(c_r, f_v), ytm, t) + faceval_pv(f_v, ytm, t);
+
+		cout << "The present value of your bond is: " << present_value << endl;
+		cout << "The present value of your coupon payments is: " << annuity_pv(c_p(c_r, f_v), ytm, t) << endl;
+		cout << "Your coupon payment is: " << c_p(c_r, f_v) << endl;
+		cout << "Your result from exponential equation is: " << expon(t, ytm);
+		break;
+	}
+
+	case 2:                                                                                                       /*If "No" is chosen*/
+	{
+		
+		cout << "What is the present value of your bond?" << endl;
+		cin >> present_value;
+
+		approximated_ytm = approx_ytm(c_ptr, f_v, present_value, c_r, t);
+
+		
+		cout << "The approximated Yield to Maturity based on input is" << approximated_ytm * 100 << endl;                      //*100 To show result in percentage form
+		cout << "The present value of your bond is: " << present_value << endl;
+		cout << "The present value of your coupon payments is: " << annuity_pv(c_p(c_r, f_v), approximated_ytm, t) << endl;
+		cout << "Your coupon payment is: " << c_p(c_r, f_v) << endl;
+		cout << "Your result from exponential equation is: " << expon(t, approximated_ytm);
+		break;
+
+	}
+   }
 	return 0;
 
- }
+}
