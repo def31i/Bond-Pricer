@@ -60,17 +60,64 @@ int main() {
 	double present_value = 0.0;
 	double approximated_ytm = 0.0;
 	double (*c_ptr)(double, double);                                //Function pointer for coupon payment function to store its address
-	c_ptr = c_p;                                                //Set function pointer equal to function so it can be passed as a paremeter outside of main
+	c_ptr = c_p;                                                // function pointer equal to function so it can be passed as a paremeter outside of main
 
 
 
 
-	cout << "What is the face value of the bond?" << endl;
-	cin >> f_v;
-	cout << "What is annual coupon rate in percent form?" << endl;
-	cin >> c_r;
-	cout << "What is the number of years to maturity?" << endl;
-	cin >> t;  
+	//While loop wrapping to ensure program does not continue until valid input is taken
+
+	while (true) {
+
+		cout << "What is the face value of the bond?" << endl;
+		cin >> f_v;
+		if (std::cin.fail()) {                                                        // cin.fail raises an error flag for incorrect input type
+			std::cin.clear();                                                         // cin.clear clears the error flag so program can continue 
+			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');       //the template class "numeric_limits" takes a type of std::streamsize and applies its max function to find the total amount of characters to be cleared in buffer for new input to be entered
+
+			cout << "Invalid input, please enter a number" << endl;
+
+		}
+		else{
+			break;
+		}
+	}
+
+
+	while (true) {
+
+		cout << "What is annual coupon rate in percent form?" << endl;
+		cin >> c_r;
+		if (std::cin.fail()) {
+			std::cin.clear();
+			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+
+			cout << "Invalid input, please enter a number" << endl;
+		
+		}
+		else {
+			break;
+		}
+	}
+
+	while (true) {
+
+		cout << "What is the number of years to maturity?" << endl;
+		cin >> t;
+		if (std::cin.fail()) {
+			std::cin.clear();
+			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+
+			cout << "Invalid input, please enter a number" << endl;
+			
+
+		}
+		else {
+			break;
+		}
+	
+	}
+
 
 
 	cout << "Do you have the yield to maturity? Type 1 or 2 to continue" << endl;
