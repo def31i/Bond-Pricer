@@ -65,7 +65,7 @@ int main() {
 
 
 
-	//While loop wrapping to ensure program does not continue until valid input is taken
+	//While loop wrapping to ensure program does not continue until valid numerical input is taken
 
 	while (true) {
 
@@ -119,34 +119,68 @@ int main() {
 	}
 
 
+	while (true) {
 
-	cout << "Do you have the yield to maturity? Type 1 or 2 to continue" << endl;
-	cout << "1. Yes" << endl;
-	cout << "2. No" << endl;
-	cin >> check;
+		cout << "Do you have the yield to maturity? Type 1 or 2 to continue" << endl;
+		cout << "1. Yes" << endl;
+		cout << "2. No" << endl;
+		cin >> check;
+		if (std::cin.fail()) {
+			std::cin.clear();
+			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+
+			cout << "Invalid input, please enter a number" << endl;
+		}
+		else {
+			break;
+		}
+	}
+
 
 
 	switch (check) {
 
 	case 1:                                                                                                         /*If "Yes" is chosen*/
 	{
-		cout << "What is the Yield to Maturity in percent form?" << endl;
-		cin >> ytm;
+		while (true) {
+			cout << "What is the Yield to Maturity in percent form?" << endl;
+			cin >> ytm;
+			if (std::cin.fail()) {
+				std::cin.clear();
+				std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+
+				cout << "Invalid input, please enter a number" << endl;
+			}
+			else {
+				break;
+			}
+		}
 
 		present_value = annuity_pv(c_p(c_r, f_v), ytm, t) + faceval_pv(f_v, ytm, t);
 
 		cout << "The present value of your bond is: " << present_value << endl;
 		cout << "The present value of your coupon payments is: " << annuity_pv(c_p(c_r, f_v), ytm, t) << endl;
 		cout << "Your coupon payment is: " << c_p(c_r, f_v) << endl;
-		cout << "Your result from exponential equation is: " << expon(t, ytm);
+		
 		break;
 	}
 
 	case 2:                                                                                                       /*If "No" is chosen*/
 	{
 		
-		cout << "What is the present value of your bond?" << endl;
-		cin >> present_value;
+		while (true) {                                                                                            
+			cout << "What is the present value of your bond?" << endl;
+			cin >> present_value;
+			if (std::cin.fail()) {
+				std::cin.clear();
+				std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+
+				cout << "Invalid input, please enter a number" << endl;
+			}
+			else {
+				break;
+			}
+		}
 
 		approximated_ytm = approx_ytm(c_ptr, f_v, present_value, c_r, t);
 
@@ -155,11 +189,12 @@ int main() {
 		cout << "The present value of your bond is: " << present_value << endl;
 		cout << "The present value of your coupon payments is: " << annuity_pv(c_p(c_r, f_v), approximated_ytm, t) << endl;
 		cout << "Your coupon payment is: " << c_p(c_r, f_v) << endl;
-		cout << "Your result from exponential equation is: " << expon(t, approximated_ytm);
+		
 		break;
 
 	}
    }
+
 	return 0;
 
 }
