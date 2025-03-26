@@ -45,18 +45,19 @@ double c_p(double c_r, double f_v) {
 
 double approx_ytm (double (*c_ptr)(double,double), double f_v, double present_value, double c_r, double t) {
 
-	return ((c_ptr(c_r,f_v) + (f_v - present_value) / t) / (f_v + present_value)) / 2.0;
+	return (c_ptr(c_r,f_v) + ((f_v - present_value) / t))   / ((f_v + present_value) / 2.0);
 
 }
+
 
 
 int main() {
 
 	int check;
-	double ytm;                                                     //Doubles used for precision and to avoid truncation
-	double f_v;
-	double c_r;
-	double t;
+	double ytm = 0.0;                                                     //Doubles used for precision and to avoid truncation and variables initialized to zero to prevent garbage value behavior
+	double f_v = 0.0;
+	double c_r = 0.0;
+	double t = 0.0;
 	double present_value = 0.0;
 	double approximated_ytm = 0.0;
 	double (*c_ptr)(double, double);                                //Function pointer for coupon payment function to store its address
@@ -190,11 +191,14 @@ int main() {
 		cout << "The present value of your coupon payments is: " << annuity_pv(c_p(c_r, f_v), approximated_ytm, t) << endl;
 		cout << "Your coupon payment is: " << c_p(c_r, f_v) << endl;
 		
-		break;
+		
 
 	}
    }
 
+	cout << "Please Enter to exit...";
+	cin.get();                                                                                          /*Keeps program from closing immediately when finished */
+	 
 	return 0;
 
 }
