@@ -54,12 +54,12 @@ double approx_ytm (double (*c_ptr)(double,double), double f_v, double present_va
 int main() {
 
 	int check;
-	double ytm = 0.0;                                                     //Doubles used for precision and to avoid truncation and variables initialized to zero to prevent garbage value behavior
-	double f_v = 0.0;
-	double c_r = 0.0;
-	double t = 0.0;
-	double present_value = 0.0;
-	double approximated_ytm = 0.0;
+	double ytm{};                                                    //Doubles used for precision and to avoid truncation and variables 
+	double f_v{};                                                    //value initialization used since values will eventually be replaced
+	double c_r{};
+	double t{};
+	double present_value{};
+	double approximated_ytm{};
 	double (*c_ptr)(double, double);                                //Function pointer for coupon payment function to store its address
 	c_ptr = c_p;                                                // function pointer equal to function so it can be passed as a paremeter outside of main
 
