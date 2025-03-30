@@ -186,17 +186,17 @@ int main() {
 		approximated_ytm = approx_ytm(c_ptr, f_v, present_value, c_r, t);
 
 		
-		cout << "The approximated Yield to Maturity based on input is" << approximated_ytm * 100 << endl;                      //*100 To show result in percentage form
-		cout << "The present value of your bond is: " << present_value << endl;
-		cout << "The present value of your coupon payments is: " << annuity_pv(c_p(c_r, f_v), approximated_ytm, t) << endl;
-		cout << "Your coupon payment is: " << c_p(c_r, f_v) << endl;
+		cout << "The approximated Yield to Maturity based on input is: " << approximated_ytm * 100 << "\n";                      //*100 To show result in percentage form
+		cout << "The present value of your bond is: " << present_value << "\n";
+		cout << "The present value of your coupon payments is: " << annuity_pv(c_p(c_r, f_v), approximated_ytm, t) << "\n";
+		cout << "Your coupon payment is: " << c_p(c_r, f_v) << "\n";
 		
 		
 
 	}
    }
 
-	cout << "Please Enter to exit...";
+	cout << "Please Enter to exit..." << endl;
 	cin.get();                                                                                          /*Keeps program from closing immediately when finished */
 	 
 	return 0;
